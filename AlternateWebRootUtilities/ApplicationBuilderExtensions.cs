@@ -45,7 +45,7 @@ namespace AlternateWebRootUtilities
                 altConfig = configuration?.GetSection("AlternateWebRoot")?.Get<AlternateWebRootConfiguration>();
             }
 
-            AlternateWebRootConfiguration.Global = altConfig;
+            AlternateWebRootConfiguration.Global = altConfig ?? new AlternateWebRootConfiguration();
 
             return appBuilder;
         }
