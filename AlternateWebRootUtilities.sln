@@ -9,11 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlternateWebRootUtilities.U
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8797F331-FA26-4EB3-97F7-E5CB61C6C711}"
 	ProjectSection(SolutionItems) = preProject
+		..\..\.editorconfig = ..\..\.editorconfig
 		CHANGELOG.md = CHANGELOG.md
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlternateWebRootUtilities.TestWebApp", "AlternateWebRootUtilities.TestWebApp\AlternateWebRootUtilities.TestWebApp.csproj", "{284326C7-E5E5-41B9-9D98-D0AACC1C45A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlternateWebRootUtilities.TestWebApp", "AlternateWebRootUtilities.TestWebApp\AlternateWebRootUtilities.TestWebApp.csproj", "{284326C7-E5E5-41B9-9D98-D0AACC1C45A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlternateWebRootUtilities.UnitTests.AlternateWebRootTests
 {
@@ -7,21 +7,24 @@ namespace AlternateWebRootUtilities.UnitTests.AlternateWebRootTests
     public class ApplyShould
     {
         [TestMethod]
-        public void ReturnSiteRelativeAddressGivenBaseUrlNull()
+        public void ReturnOriginalValueGivenNotWebRootRelativeAddress()
         {
-            AlternateWebRoot.BaseUrl = null;
-            var address = "~/myfile.png";
-            var result = AlternateWebRoot.Apply(address);
-            Assert.AreEqual(address.Substring(1), result);
+            var config = new AlternateWebRootConfiguration
+            {
+                BaseUrl = new Uri("http://localhost:5784"),
+            };
+            var address = "/myfile2.png";
+            var result = AlternateWebRoot.Apply(address, config);
+            Assert.AreEqual(address, result);
         }
 
         [TestMethod]
-        public void ReturnOriginalValueGivenNotWebRootRelativeAddress()
+        public void ReturnSiteRelativeAddressGivenBaseUrlNull()
         {
-            AlternateWebRoot.BaseUrl = new Uri("http://localhost:5784");
-            var address = "/myfile2.png";
-            var result = AlternateWebRoot.Apply(address);
-            Assert.AreEqual(address, result);
+            var config = new AlternateWebRootConfiguration();
+            var address = "~/myfile.png";
+            var result = AlternateWebRoot.Apply(address, config);
+            Assert.AreEqual(address.Substring(1), result);
         }
 
         [DataRow("http://acme.com", "~/test.jpg", "http://acme.com/test.jpg")]
@@ -31,8 +34,11 @@ namespace AlternateWebRootUtilities.UnitTests.AlternateWebRootTests
         [DataTestMethod]
         public void ReturnValueGivenSpecifiedBaseUrlAndAddress(string baseAddress, string relativeAddress, string expectedAddress)
         {
-            AlternateWebRoot.BaseUrl = new Uri(baseAddress);
-            var result = AlternateWebRoot.Apply(relativeAddress);
+            var config = new AlternateWebRootConfiguration
+            {
+                BaseUrl = new Uri(baseAddress),
+            };
+            var result = AlternateWebRoot.Apply(relativeAddress, config);
             Assert.AreEqual(expectedAddress, result);
         }
 
