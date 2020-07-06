@@ -15,7 +15,7 @@ namespace AlternateWebRootUtilities
         /// <param name="appBuilder">The current <see cref="IApplicationBuilder"/> being configured.</param>
         /// <param name="baseUrl">The <see cref="Uri"/> to use as the alternative for web root relative paths.</param>
         /// <returns>The original <see cref="IApplicationBuilder"/> passed in.</returns>
-        public static IApplicationBuilder UseAlternateWebRoot(this IApplicationBuilder appBuilder, Uri baseUrl = null)
+        public static IApplicationBuilder UseAlternateWebRoot(this IApplicationBuilder appBuilder, Uri baseUrl)
         {
             var config = new AlternateWebRootConfiguration
             {
@@ -32,7 +32,7 @@ namespace AlternateWebRootUtilities
         /// <param name="appBuilder">The current <see cref="IApplicationBuilder"/> being configured.</param>
         /// <param name="altConfig">The <see cref="AlternateWebRootConfiguration"/> to use globally.</param>
         /// <returns>The original <see cref="IApplicationBuilder"/> passed in.</returns>
-        public static IApplicationBuilder UseAlternateWebRoot(this IApplicationBuilder appBuilder, AlternateWebRootConfiguration altConfig)
+        public static IApplicationBuilder UseAlternateWebRoot(this IApplicationBuilder appBuilder, AlternateWebRootConfiguration altConfig = null)
         {
             if (appBuilder == null)
             {
@@ -41,18 +41,8 @@ namespace AlternateWebRootUtilities
 
             if (altConfig == null)
             {
-                throw new ArgumentNullException(nameof(altConfig));
-            }
-
-            if (altConfig.BaseUrl == null)
-            {
-                var config = (IConfiguration)appBuilder.ApplicationServices.GetService(typeof(IConfiguration));
-                var section = config?.GetSection("AlternateWebRoot");
-                var value = section?.Value;
-                if (!string.IsNullOrEmpty(value))
-                {
-                    altConfig.BaseUrl = new Uri(value);
-                }
+                var configuration = (IConfiguration)appBuilder.ApplicationServices.GetService(typeof(IConfiguration));
+                altConfig = configuration?.GetSection("AlternateWebRoot")?.Get<AlternateWebRootConfiguration>();
             }
 
             AlternateWebRootConfiguration.Global = altConfig;
