@@ -16,6 +16,9 @@ namespace AlternateWebRootUtilities
         [HtmlAttributeName("asp-alternate-web-root")]
         public bool IsEnabled { get; set; }
 
+        [HtmlAttributeName("asp-append-version")]
+        public bool? IsVersioned { get; set; }
+
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             base.Process(context, output);
@@ -29,15 +32,10 @@ namespace AlternateWebRootUtilities
                     var alternateAddress = AlternateWebRoot.Apply(address);
                     if (address != alternateAddress)
                     {
-                        EnsureFileVersionProvider();
-                        var versionedAddress = FileVersionProvider.AddFileVersionToPath(new PathString("/"), address.Substring(1));
-
-                        var queryStringIndex = versionedAddress.IndexOf("?");
-                        if (queryStringIndex > -1)
+                        if (IsVersioned.HasValue && IsVersioned.Value)
                         {
-                            var versionedQuery = versionedAddress.Substring(queryStringIndex);
+                            alternateAddress = AppendVersion(address, alternateAddress);
                         }
-
 
                         output.Attributes.RemoveAll(attributeName);
                         output.Attributes.Add(attributeName, alternateAddress);
@@ -46,6 +44,26 @@ namespace AlternateWebRootUtilities
             }
 
 
+        }
+
+        private string AppendVersion(string requestedAddress, string alternateAddress)
+        {
+            EnsureFileVersionProvider();
+            var versionedAddress = FileVersionProvider.AddFileVersionToPath(new PathString("/"), requestedAddress.Substring(1));
+
+            var queryStringIndex = versionedAddress.IndexOf("?");
+            if (queryStringIndex > -1)
+            {
+                var versionedQuery = versionedAddress.Substring(queryStringIndex);
+                var alternateQueryIndex = alternateAddress.IndexOf("?");
+                if (alternateQueryIndex > -1)
+                {
+                    alternateAddress = alternateAddress.Substring(0, alternateQueryIndex);
+                }
+                alternateAddress = alternateAddress + versionedQuery;
+            }
+
+            return alternateAddress;
         }
 
         internal IFileVersionProvider FileVersionProvider { get; private set; }
