@@ -12,7 +12,7 @@
     <RepositoryUrl>https://github.com/kyleherzog/AlternateWebRootUtilities</RepositoryUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>Kyle Herzog</Authors>
-    <Description>A .NET Standard library that provides razor tag helpers that allow web root relative paths ("~/") to be replaced by an alternative location rather than the local path.</Description>
+    <Description>A .NET Standard library that provides razor tag helpers that allow web root relative paths to be replaced by an alternative location rather than the local path.</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

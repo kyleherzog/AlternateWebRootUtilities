@@ -1,6 +1,6 @@
 # Alternate Web Root Utilities
 
-A .NET Standard library that provides razor tag helpers that allow web root relative paths ("~/") to be replaced by an alternative location rather than the local path.
+A .NET Standard library that provides razor tag helpers that allow web root relative paths to be replaced by an alternative location rather than the local path.
 
 [![Build Status](https://dev.azure.com/kyleherzog/AlternateWebRootUtilities/_apis/build/status/AlternateWebRootUtilities?branchName=master)](https://dev.azure.com/kyleherzog/AlternateWebRootUtilities/_build/latest?definitionId=11&branchName=master)
 
@@ -24,7 +24,7 @@ If the alternative web root base URL is set to `https://contoso.com/files` the f
 <img src="https://contoso.com/files/images/myimage.png" />
 ```
 
-Only paths that are web root relative (start with "~") will have a replacement take place.  
+By default only paths that are web application root relative (start with "~") will have a replacement take place.  However, the configuration option `IsIncludingSiteRelativePaths` can be set to true to allow site relative paths (start with "/") to be modified as well. 
 
 If the configuration of replacement location is null, no replacement will take place.  This can be desirable in a local development environment.
 
