@@ -34,7 +34,7 @@ namespace AlternateWebRootUtilities
         /// <summary>
         /// Gets or sets a value indicating whether or not to enable the applying of the alternate web root to all supported HTML tags.
         /// </summary>
-        public bool IsGloballyEnabled { get; set; }
+        public bool IsGloballyEnabled { get; set; } = true;
 
         /// <summary>
         /// Gets the string representation of the address that will be prefixed when applying to web root relative addresses.

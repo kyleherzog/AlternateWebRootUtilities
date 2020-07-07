@@ -1,13 +1,13 @@
 # Alternate Web Root Utilities
 
-A .NET Standard library that provides razor tag helpers that allow web root relative paths ("~/") to be replaced by alternative location rather than the local path.
+A .NET Standard library that provides razor tag helpers that allow web root relative paths ("~/") to be replaced by an alternative location rather than the local path.
 
 See the [changelog](CHANGELOG.md) for changes.
 
 ## Overview
-Hosting static content from the wwwroot folder in an ASP.NET Core web application is convenient, but can have an impact on CPU usage and bandwidth used when hosted in an Azure App Service environment.  The Alternate Web Root Utilities package enables one to easily offload the static files, allowing the hosting to occur on a separate web host, say Azure Storage.
+Hosting static content from the wwwroot folder in an ASP.NET Core web application is convenient, but can have an impact on CPU usage and bandwidth used when hosted in an Azure App Service environment.  The Alternate Web Root Utilities package enables one to easily offload the static files, allowing the hosting to occur on a separate web host like Azure Storage.
 
-The configuration settings allow for the functionality to be enabled only in certain environments.  Therefore, when developing locally, the local wwwroot folder can be use, but when hosted in a production environment an alternative location can be specified. 
+The configuration settings allow for the functionality to be enabled only in certain environments.  Therefore, when developing locally, the local wwwroot folder can be used, but when hosted in a production environment an alternative location can be specified. 
 
 ### Path Replacement
 If the alternative web root base URL is set to `https://contoso.com/files` the following replacement would take place. 
@@ -22,7 +22,7 @@ If the alternative web root base URL is set to `https://contoso.com/files` the f
 <img src="https://contoso.com/files/images/myimage.png" />
 ```
 
-Only paths that are web root relative (starts with "~") will have a replacement take place.  
+Only paths that are web root relative (start with "~") will have a replacement take place.  
 
 If the configuration of replacement location is null, no replacement will take place.  This can be desirable in a local development environment.
 
@@ -65,3 +65,22 @@ The following HTML tags are currently supported.
 - source
 - link
 - script
+
+## Tag Level Support
+By default, the alternate web root functionality is enabled globally.  However, the functionality can also be limited to individual HTML tags.
+
+To limit the functionality to the tag level, the `IsGloballyEnabled` setting should be set to `false`.
+
+```
+{
+    "AlternateWebRoot": {
+        "BaseUrl": "https://mystorageaccount.blob.core.windows.net/content/",
+        "IsGloballyEnabled" : false
+    }
+}
+```
+
+Then, enable individual tags with the `asp-alternate-web-root` attribute.
+```
+<img src="~/images/house.jpg" asp-alternate-web-root="true" />
+```

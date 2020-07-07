@@ -20,7 +20,6 @@ namespace AlternateWebRootUtilities
             var config = new AlternateWebRootConfiguration
             {
                 BaseUrl = baseUrl,
-                IsGloballyEnabled = true,
             };
 
             return UseAlternateWebRoot(appBuilder, config);
