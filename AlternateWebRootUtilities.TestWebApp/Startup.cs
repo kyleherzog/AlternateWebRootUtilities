@@ -25,7 +25,8 @@ namespace AlternateWebRootUtilities.TestWebApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseAlternateWebRoot(new Uri("https://localhost:1234"));
+            // app.UseAlternateWebRoot(new Uri("https://localhost:1234"))
+            app.UseAlternateWebRoot();
 
             if (env.IsDevelopment())
             {

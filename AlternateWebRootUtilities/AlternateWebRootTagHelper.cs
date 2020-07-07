@@ -55,7 +55,8 @@ namespace AlternateWebRootUtilities
                     throw new ArgumentNullException(nameof(output));
                 }
 
-                if (AlternateWebRootConfiguration.Global.IsGloballyEnabled && (!IsEnabled.HasValue || IsEnabled.Value))
+                if ((AlternateWebRootConfiguration.Global.IsGloballyEnabled && (!IsEnabled.HasValue || IsEnabled.Value))
+                    || (IsEnabled.HasValue && IsEnabled.Value))
                 {
                     var attributeName = GetAttributeName(context.TagName);
 
