@@ -37,6 +37,11 @@ namespace AlternateWebRootUtilities
         public bool IsGloballyEnabled { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets a value indicating whether or not to target paths that start with a '/' character.
+        /// </summary>
+        public bool IsIncludingSiteRelativePaths { get; set; }
+
+        /// <summary>
         /// Gets the string representation of the address that will be prefixed when applying to web root relative addresses.
         /// </summary>
         internal string AddressPrefix { get; private set; }
