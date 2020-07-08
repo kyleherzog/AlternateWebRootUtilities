@@ -33,7 +33,9 @@ namespace AlternateWebRootUtilities
                 address = address.Substring(1);
                 address = config.AddressPrefix + address;
             }
-            else if (config.IsIncludingSiteRelativePaths && address.StartsWith("/", StringComparison.Ordinal))
+            else if (config.IsIncludingSiteRelativePaths
+                && address.StartsWith("/", StringComparison.Ordinal)
+                && !address.StartsWith("//", StringComparison.Ordinal))
             {
                 address = config.AddressPrefix + address;
             }
