@@ -60,17 +60,20 @@ namespace AlternateWebRootUtilities
                 {
                     var attributeName = GetAttributeName(context.TagName);
 
-                    var address = context.AllAttributes[attributeName].Value.ToString();
-                    var alternateAddress = AlternateWebRoot.Apply(address);
-                    if (address != alternateAddress)
+                    if (context.AllAttributes.ContainsName(attributeName))
                     {
-                        if (IsVersioned.HasValue && IsVersioned.Value)
+                        var address = context.AllAttributes[attributeName].Value.ToString();
+                        var alternateAddress = AlternateWebRoot.Apply(address);
+                        if (address != alternateAddress)
                         {
-                            alternateAddress = AppendVersion(address, alternateAddress);
-                        }
+                            if (IsVersioned.HasValue && IsVersioned.Value)
+                            {
+                                alternateAddress = AppendVersion(address, alternateAddress);
+                            }
 
-                        output.Attributes.RemoveAll(attributeName);
-                        output.Attributes.Add(attributeName, alternateAddress);
+                            output.Attributes.RemoveAll(attributeName);
+                            output.Attributes.Add(attributeName, alternateAddress);
+                        }
                     }
                 }
             }
