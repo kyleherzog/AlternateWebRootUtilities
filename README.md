@@ -2,6 +2,7 @@
 
 A .NET Standard library that provides razor tag helpers that allow web root relative paths to be replaced by an alternative location rather than the local path.
 
+![Nuget](https://img.shields.io/nuget/v/AlternateWebRootUtilities)
 [![Build Status](https://dev.azure.com/kyleherzog/AlternateWebRootUtilities/_apis/build/status/AlternateWebRootUtilities?branchName=master)](https://dev.azure.com/kyleherzog/AlternateWebRootUtilities/_build/latest?definitionId=11&branchName=master)
 
 See the [changelog](CHANGELOG.md) for changes.
