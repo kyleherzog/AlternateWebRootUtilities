@@ -2,6 +2,9 @@
 
 These are the changes to each version that has been released.
 
+## 1.3
+- [x] Handling empty target path attribute
+
 ## 1.2
 - [x] Not modifying protocol relative links
 
