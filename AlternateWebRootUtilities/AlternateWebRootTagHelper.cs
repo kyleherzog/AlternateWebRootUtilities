@@ -63,16 +63,19 @@ namespace AlternateWebRootUtilities
                     if (context.AllAttributes.ContainsName(attributeName))
                     {
                         var address = context.AllAttributes[attributeName].Value.ToString();
-                        var alternateAddress = AlternateWebRoot.Apply(address);
-                        if (address != alternateAddress)
+                        if (!string.IsNullOrEmpty(address))
                         {
-                            if (IsVersioned.HasValue && IsVersioned.Value)
+                            var alternateAddress = AlternateWebRoot.Apply(address);
+                            if (address != alternateAddress)
                             {
-                                alternateAddress = AppendVersion(address, alternateAddress);
-                            }
+                                if (IsVersioned.HasValue && IsVersioned.Value)
+                                {
+                                    alternateAddress = AppendVersion(address, alternateAddress);
+                                }
 
-                            output.Attributes.RemoveAll(attributeName);
-                            output.Attributes.Add(attributeName, alternateAddress);
+                                output.Attributes.RemoveAll(attributeName);
+                                output.Attributes.Add(attributeName, alternateAddress);
+                            }
                         }
                     }
                 }
