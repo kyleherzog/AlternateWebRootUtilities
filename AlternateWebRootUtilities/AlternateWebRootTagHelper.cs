@@ -16,7 +16,7 @@ namespace AlternateWebRootUtilities
     [HtmlTargetElement("link")]
     public class AlternateWebRootTagHelper : TagHelper
     {
-        private string[] targetAttributes = { "srcset", "href", "src" };
+        private readonly string[] targetAttributes = { "srcset", "href", "src" };
 
         /// <summary>
         /// Gets or sets a value indicating whether or not the alternate web root should be applied to this in tag.
