@@ -2,6 +2,9 @@
 
 These are the changes to each version that has been released.
 
+## 1.4
+- [x] Broader attribute targeting
+
 ## 1.3
 - [x] Handling empty target path attribute
 

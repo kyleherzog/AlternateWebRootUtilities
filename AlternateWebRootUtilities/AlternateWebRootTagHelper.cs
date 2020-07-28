@@ -16,6 +16,8 @@ namespace AlternateWebRootUtilities
     [HtmlTargetElement("link")]
     public class AlternateWebRootTagHelper : TagHelper
     {
+        private readonly string[] targetAttributes = { "srcset", "href", "src" };
+
         /// <summary>
         /// Gets or sets a value indicating whether or not the alternate web root should be applied to this in tag.
         /// </summary>
@@ -58,23 +60,24 @@ namespace AlternateWebRootUtilities
                 if ((AlternateWebRootConfiguration.Global.IsGloballyEnabled && (!IsEnabled.HasValue || IsEnabled.Value))
                     || (IsEnabled.HasValue && IsEnabled.Value))
                 {
-                    var attributeName = GetAttributeName(context.TagName);
-
-                    if (context.AllAttributes.ContainsName(attributeName))
+                    foreach (var attributeName in targetAttributes)
                     {
-                        var address = context.AllAttributes[attributeName].Value.ToString();
-                        if (!string.IsNullOrEmpty(address))
+                        if (context.AllAttributes.ContainsName(attributeName))
                         {
-                            var alternateAddress = AlternateWebRoot.Apply(address);
-                            if (address != alternateAddress)
+                            var address = context.AllAttributes[attributeName].Value.ToString();
+                            if (!string.IsNullOrEmpty(address))
                             {
-                                if (IsVersioned.HasValue && IsVersioned.Value)
+                                var alternateAddress = AlternateWebRoot.Apply(address);
+                                if (address != alternateAddress)
                                 {
-                                    alternateAddress = AppendVersion(address, alternateAddress);
-                                }
+                                    if (IsVersioned.HasValue && IsVersioned.Value)
+                                    {
+                                        alternateAddress = AppendVersion(address, alternateAddress);
+                                    }
 
-                                output.Attributes.RemoveAll(attributeName);
-                                output.Attributes.Add(attributeName, alternateAddress);
+                                    output.Attributes.RemoveAll(attributeName);
+                                    output.Attributes.Add(attributeName, alternateAddress);
+                                }
                             }
                         }
                     }
@@ -82,16 +85,6 @@ namespace AlternateWebRootUtilities
             }
 
             base.Process(context, output);
-        }
-
-        private static string GetAttributeName(string tagName)
-        {
-            return tagName switch
-            {
-                "source" => "srcset",
-                "link" => "href",
-                _ => "src",
-            };
         }
 
         private string AppendVersion(string requestedAddress, string alternateAddress)
