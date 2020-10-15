@@ -72,25 +72,6 @@ namespace AlternateWebRootUtilities
             base.Process(context, output);
         }
 
-        private void ProcessAttribute(TagHelperContext context, TagHelperOutput output, string attributeName)
-        {
-            if (context.AllAttributes.ContainsName(attributeName))
-            {
-                var address = context.AllAttributes[attributeName].Value.ToString();
-                var alternateAddress = AlternateWebRoot.Apply(address);
-                if (address != alternateAddress)
-                {
-                    if (IsVersioned.HasValue && IsVersioned.Value)
-                    {
-                        alternateAddress = AppendVersion(address, alternateAddress);
-                    }
-
-                    output.Attributes.RemoveAll(attributeName);
-                    output.Attributes.Add(attributeName, alternateAddress);
-                }
-            }
-        }
-
         private static string GetAttributeName(string tagName)
         {
             return tagName switch
@@ -127,6 +108,25 @@ namespace AlternateWebRootUtilities
             if (FileVersionProvider == null)
             {
                 FileVersionProvider = ViewContext.HttpContext.RequestServices.GetRequiredService<IFileVersionProvider>();
+            }
+        }
+
+        private void ProcessAttribute(TagHelperContext context, TagHelperOutput output, string attributeName)
+        {
+            if (context.AllAttributes.ContainsName(attributeName))
+            {
+                var address = context.AllAttributes[attributeName].Value.ToString();
+                var alternateAddress = AlternateWebRoot.Apply(address);
+                if (address != alternateAddress)
+                {
+                    if (IsVersioned.HasValue && IsVersioned.Value)
+                    {
+                        alternateAddress = AppendVersion(address, alternateAddress);
+                    }
+
+                    output.Attributes.RemoveAll(attributeName);
+                    output.Attributes.Add(attributeName, alternateAddress);
+                }
             }
         }
     }
