@@ -62,23 +62,10 @@ namespace AlternateWebRootUtilities
                 {
                     foreach (var attributeName in targetAttributes)
                     {
-                        if (context.AllAttributes.ContainsName(attributeName))
+                        ProcessAttribute(context, output, attributeName);
+                        if (!AlternateWebRootConfiguration.Global.IsExcludingDataAttributes)
                         {
-                            var address = context.AllAttributes[attributeName].Value.ToString();
-                            if (!string.IsNullOrEmpty(address))
-                            {
-                                var alternateAddress = AlternateWebRoot.Apply(address);
-                                if (address != alternateAddress)
-                                {
-                                    if (IsVersioned.HasValue && IsVersioned.Value)
-                                    {
-                                        alternateAddress = AppendVersion(address, alternateAddress);
-                                    }
-
-                                    output.Attributes.RemoveAll(attributeName);
-                                    output.Attributes.Add(attributeName, alternateAddress);
-                                }
-                            }
+                            ProcessAttribute(context, output, $"data-{attributeName}");
                         }
                     }
                 }
@@ -113,6 +100,28 @@ namespace AlternateWebRootUtilities
             if (FileVersionProvider == null)
             {
                 FileVersionProvider = ViewContext.HttpContext.RequestServices.GetRequiredService<IFileVersionProvider>();
+            }
+        }
+
+        private void ProcessAttribute(TagHelperContext context, TagHelperOutput output, string attributeName)
+        {
+            if (context.AllAttributes.ContainsName(attributeName))
+            {
+                var address = context.AllAttributes[attributeName].Value.ToString();
+                if (!string.IsNullOrEmpty(address))
+                {
+                    var alternateAddress = AlternateWebRoot.Apply(address);
+                    if (address != alternateAddress)
+                    {
+                        if (IsVersioned.HasValue && IsVersioned.Value)
+                        {
+                            alternateAddress = AppendVersion(address, alternateAddress);
+                        }
+
+                        output.Attributes.RemoveAll(attributeName);
+                        output.Attributes.Add(attributeName, alternateAddress);
+                    }
+                }
             }
         }
     }

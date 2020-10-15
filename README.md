@@ -87,3 +87,6 @@ Then, enable individual tags with the `asp-alternate-web-root` attribute.
 ```
 <img src="~/images/house.jpg" asp-alternate-web-root="true" />
 ```
+
+## Data Attribute Support
+By default, HTML attributes targeted for modification will also have their "data-" prefixed attributes targeted as well. (Ex: src vs. data-src) If this is not desired, the `IsExcludingDataAttributes` property can be set to `true`.

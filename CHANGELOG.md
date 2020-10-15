@@ -2,6 +2,9 @@
 
 These are the changes to each version that has been released.
 
+## 2.0
+- [x] Added ability to target "data-" prefixed targeted attributes.
+
 ## 1.4
 - [x] Broader attribute targeting
 
