@@ -60,22 +60,35 @@ namespace AlternateWebRootUtilities
                 {
                     var attributeName = GetAttributeName(context.TagName);
 
-                    var address = context.AllAttributes[attributeName].Value.ToString();
-                    var alternateAddress = AlternateWebRoot.Apply(address);
-                    if (address != alternateAddress)
-                    {
-                        if (IsVersioned.HasValue && IsVersioned.Value)
-                        {
-                            alternateAddress = AppendVersion(address, alternateAddress);
-                        }
+                    ProcessAttribute(context, output, attributeName);
 
-                        output.Attributes.RemoveAll(attributeName);
-                        output.Attributes.Add(attributeName, alternateAddress);
+                    if (!AlternateWebRootConfiguration.Global.IsExcludingDataAttributes)
+                    {
+                        ProcessAttribute(context, output, $"data-{attributeName}");
                     }
                 }
             }
 
             base.Process(context, output);
+        }
+
+        private void ProcessAttribute(TagHelperContext context, TagHelperOutput output, string attributeName)
+        {
+            if (context.AllAttributes.ContainsName(attributeName))
+            {
+                var address = context.AllAttributes[attributeName].Value.ToString();
+                var alternateAddress = AlternateWebRoot.Apply(address);
+                if (address != alternateAddress)
+                {
+                    if (IsVersioned.HasValue && IsVersioned.Value)
+                    {
+                        alternateAddress = AppendVersion(address, alternateAddress);
+                    }
+
+                    output.Attributes.RemoveAll(attributeName);
+                    output.Attributes.Add(attributeName, alternateAddress);
+                }
+            }
         }
 
         private static string GetAttributeName(string tagName)

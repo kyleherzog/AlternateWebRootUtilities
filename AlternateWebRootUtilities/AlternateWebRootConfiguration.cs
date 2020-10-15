@@ -42,6 +42,14 @@ namespace AlternateWebRootUtilities
         public bool IsIncludingSiteRelativePaths { get; set; }
 
         /// <summary>
+        /// Gets or sets a valid indicating whether or not to transform the targeted attributes including their "data-" prefixed variations.
+        /// </summary>
+        /// <remarks>
+        /// An img tag targets the src attribute. If this is set to false, the data-src attribute will also be targeted for transformation.
+        /// </remarks>
+        public bool IsExcludingDataAttributes { get; set; }
+
+        /// <summary>
         /// Gets the string representation of the address that will be prefixed when applying to web root relative addresses.
         /// </summary>
         internal string AddressPrefix { get; private set; }
