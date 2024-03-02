@@ -2,6 +2,9 @@
 
 These are the changes to each version that has been released.
 
+## 3.0
+- [x] Targeting .NET 6.0 and .NET 8.0
+
 ## 2.0
 - [x] Added ability to target "data-" prefixed targeted attributes.
 

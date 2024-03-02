@@ -23,10 +23,7 @@ namespace AlternateWebRootUtilities
                 throw new ArgumentNullException(nameof(address));
             }
 
-            if (config == null)
-            {
-                config = AlternateWebRootConfiguration.Global;
-            }
+            config ??= AlternateWebRootConfiguration.Global;
 
             if (address.StartsWith("~", StringComparison.Ordinal))
             {
