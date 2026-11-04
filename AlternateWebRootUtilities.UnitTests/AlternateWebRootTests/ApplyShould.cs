@@ -21,7 +21,7 @@ public class ApplyShould
     [DataRow("https://contoso.com", "~/test.jpg?q=123", "https://contoso.com/test.jpg?q=123")]
     [DataRow("https://contoso.com", "/test.jpg", "/test.jpg")]
     [DataRow("https://contoso.com", "//cdn.contoso.com/test.jpg", "//cdn.contoso.com/test.jpg")]
-    [DataTestMethod]
+    [TestMethod]
     public void ReturnValueGivenNotIsIncludingSiteRelativePaths(string baseAddress, string relativeAddress, string expectedAddress)
     {
         var config = new AlternateWebRootConfiguration
@@ -39,7 +39,7 @@ public class ApplyShould
     [DataRow("https://contoso.com", "~/test.jpg?q=123", "https://contoso.com/test.jpg?q=123")]
     [DataRow("https://contoso.com", "/test.jpg", "https://contoso.com/test.jpg")]
     [DataRow("https://contoso.com", "//cdn.contoso.com/test.jpg", "//cdn.contoso.com/test.jpg")]
-    [DataTestMethod]
+    [TestMethod]
     public void ReturnValueGivenIsIncludingSiteRelativePaths(string baseAddress, string relativeAddress, string expectedAddress)
     {
         var config = new AlternateWebRootConfiguration
@@ -52,10 +52,11 @@ public class ApplyShould
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void ThrowExceptionGivenNullAddress()
     {
-        AlternateWebRoot.Apply(null);
-        Assert.Fail("An exception should have been thrown.");
+        Assert.ThrowsExactly<ArgumentNullException>(() =>
+        {
+            AlternateWebRoot.Apply(null);
+        });
     }
 }
