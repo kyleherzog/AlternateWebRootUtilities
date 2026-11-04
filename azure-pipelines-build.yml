@@ -21,7 +21,7 @@ variables:
 trigger:
   branches:
     include:
-    - refs/heads/main
+    - refs/heads/master
   batch: True
 resources:
   repositories:
