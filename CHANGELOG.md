@@ -2,6 +2,11 @@
 
 These are the changes to each version that has been released.
 
+## 4.0
+- [x] Added .NET 10 targeting
+- [x] Removed explicit reference to Microsoft.Extensions.Configuration.Abstractions
+- [x] Removed explicit reference to Microsoft.Extensions.Configuration.Binder
+
 ## 3.0
 - [x] Targeting .NET 6.0 and .NET 8.0
 
